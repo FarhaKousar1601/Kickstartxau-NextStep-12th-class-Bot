@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KickStartX | Career Counselling & Abroad Studies</title>
+  
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    /* =========================================
+       CSS VARIABLES & THEME SETUP
+       ========================================= */
+    :root {
+      --primary-teal: #0fa997;
+      --primary-teal-hover: #0c8a7b;
+      --text-main: #1a1a2e;
+      --text-muted: #475569;
+      --bg-body: #ffffff;
+      --bg-card: #ffffff;
+      --bg-glow: radial-gradient(circle at 50% 0%, rgba(15, 169, 151, 0.15) 0%, rgba(255, 255, 255, 0) 70%);
+      --border-color: #e2e8f0;
+      --nav-bg: #ffffff;
+      --dark-bg: #0f172a;
+      --light-gray: #f8fafc;
+    }
+
+    /* Dark Mode Overrides */
+    body.dark-mode {
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --bg-body: #0b1120;
+      --bg-card: #1e293b;
+      --bg-glow: radial-gradient(circle at 50% 0%, rgba(15, 169, 151, 0.1) 0%, rgba(11, 17, 32, 0) 70%);
+      --border-color: #334155;
+      --nav-bg: #0f172a;
+      --light-gray: #1e293b;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      line-height: 1.5;
+      overflow-x: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Background Glow Effect */
+    .bg-glow {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 800px;
+      background: var(--bg-glow);
+      z-index: -1;
+      pointer-events: none;
+      transition: background 0.3s;
+    }
+
+    /* =========================================
+       NAVBAR
+       ========================================= */
+    .navbar-wrapper {
+      padding: 20px 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--nav-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 10px 24px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+      transition: background 0.3s, border 0.3s;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--primary-teal);
+      border: 1px solid #f1f5f9;
+      overflow: hidden;
+    }
+    
+    /* Placeholder for actual logo */
+    .logo-icon img { width: 100%; height: 100%; object-fit: contain; }
+
+    .logo-text .title {
+      font-weight: 800;
+      font-size: 1.2rem;
+      color: var(--text-main);
+      letter-spacing: -0.02em;
+    }
+
+    .logo-text .title span { color: var(--primary-teal); }
+
+    .logo-text .subtitle {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text-main);
+    }
+    
+    .nav-links a.active {
+      border: 1px solid var(--primary-teal);
+      color: var(--text-main);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* THEME TOGGLE */
+    .theme-toggle {
+      display: flex;
+      align-items: center;
+      background: var(--border-color);
+      border-radius: 20px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .theme-toggle button {
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 16px;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      transition: all 0.2s;
+    }
+
+    .theme-toggle button.active {
+      background: var(--primary-teal);
+      color: white;
+    }
+
+    .btn-dark {
+      background: #0f172a;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .btn-dark:hover { background: #1e293b; }
+
+    /* =========================================
+       HERO SECTION
+       ========================================= */
+    .hero {
+      text-align: center;
+      padding: 60px 0 60px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 .gradient-text {
+      background: linear-gradient(90deg, #0fa997 0%, #34d399 40%, #facc15 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero h1 .dark-text { color: var(--text-main); }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      max-width: 850px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary-teal {
+      background: var(--primary-teal);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: background 0.2s;
+    }
+    .btn-primary-teal:hover { background: var(--primary-teal-hover); }
+
+    .btn-outline-dark {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-color);
+      padding: 16px 32px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+    .btn-outline-dark:hover { border-color: #94a3b8; background: var(--light-gray); }
+
+    /* =========================================
+       FEATURED SERVICE CARD
+       ========================================= */
+    .featured-card {
+      background: #0f172a; /* Keep dark */
+      border-radius: 40px;
+      display: flex;
+      overflow: hidden;
+      position: relative;
+      min-height: 480px;
+      margin-bottom: 80px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      color: white;
+    }
+
+    .featured-content {
+      flex: 1;
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      z-index: 2;
+      position: relative;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      margin-bottom: 24px;
+      width: fit-content;
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .featured-content h2 {
+      font-size: 3rem;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+    .featured-content h2 span { color: var(--primary-teal); }
+    .featured-content p { color: #cbd5e1; margin-bottom: 40px; font-size: 1.1rem; max-width: 400px;}
+
+    .featured-actions { display: flex; gap: 16px; }
+    
+    .btn-teal-solid {
+      background: #69c0b0;
+      color: #0f172a;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-dark-outline {
+      background: transparent;
+      color: white;
+      border: 1px solid #475569;
+      padding: 14px 28px;
+      border-radius: 30px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+
+    .featured-image {
+      flex: 1.2;
+      background: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=1000') center/cover no-repeat;
+      position: relative;
+    }
+
+    .featured-image::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, #0f172a 0%, rgba(15, 23, 42, 0.4) 50%, rgba(15, 23, 42, 0) 100%);
+    }
+
+    .carousel-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 1px solid #475569;
+      background: rgba(15, 23, 42, 0.6);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      backdrop-filter: blur(4px);
+    }
+    .carousel-btn.left { left: 24px; }
+    .carousel-btn.right { right: 24px; }
+
+    /* =========================================
+       SERVICES GRID (From Text File)
+       ========================================= */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 80px;
+    }
+    
+    .service-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 24px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-weight: 600;
+      transition: transform 0.2s;
+    }
+    .service-item:hover { transform: translateY(-4px); }
+    .service-item i { color: var(--primary-teal); font-size: 1.5rem; }
+
+    /* =========================================
+       CUSTOM BOT AVATAR (Right Side)
+       ========================================= */
+    .bot-avatar-container {
+      position: fixed;
+      bottom: 0px;
+      right: 20px;
+      height: 75vh;
+      max-height: 700px;
+      z-index: 1000;
+      display: flex;
+      align-items: flex-end;
+      pointer-events: none; /* Allows clicking through to the actual Botpress widget */
+    }
+
+    .bot-avatar-container img {
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(-5px 5px 15px rgba(0,0,0,0.15)); 
+      transition: opacity 0.3s;
+    }
+
+    /* Hide custom avatar on mobile to prevent overlap */
+    @media (max-width: 900px) {
+      .bot-avatar-container { display: none; }
+      .hero h1 { font-size: 2.5rem; }
+      .nav-links { display: none; }
+      .featured-card { flex-direction: column; }
+      .featured-content { padding: 40px 24px; }
+      .featured-image { min-height: 300px; }
+      .featured-image::before { background: linear-gradient(0deg, #0f172a 0%, rgba(15, 23, 42, 0.2) 100%); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow"></div>
+
+  <!-- =========================================
+      
+       ========================================= -->
+  <div class="bot-avatar-container">
+    <img src="https://github.com/FarhaKousar1601/Kickstartxau-NextStep-12th-class-Bot/blob/main/Screenshot%202026-10-26%20175046.png" />
+  </div>
+
+  <div class="container">
+    <!-- NAVBAR -->
+    <div class="navbar-wrapper">
+      <nav class="navbar">
+        <div class="logo-area">
+          <div class="logo-icon">
+            <!-- You can put an image tag here for the real logo -->
+            K
+          </div>
+          <div class="logo-text">
+            <div class="title">KickStart<span>X</span></div>
+            <div class="subtitle">Athlete · Academic</div>
+          </div>
+        </div>
+
+        <div class="nav-links">
+          <a href="#" class="active">Home</a>
+          <a href="#">About</a>
+          <a href="#">Career</a>
+          <a href="#">Courses</a>
+          <a href="#">Services</a>
+          <a href="#">Blog</a>
+          <a href="#">Contact</a>
+          <a href="#">Talk to Avi</a>
+        </div>
+
+        <div class="nav-actions">
+          <div class="theme-toggle">
+            <button class="active" id="btnLight"><i class="fas fa-sun"></i></button>
+            <button id="btnDark"><i class="fas fa-moon"></i></button>
+          </div>
+          <button class="btn-dark">Get Started <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </nav>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <h1>
+        <span class="gradient-text">One Decision Can Shape Your Next 10 Years</span><br>
+        <span class="dark-text">Make It With Confidence</span>
+      </h1>
+      <p>
+        Choosing a college or career shouldn't be based on pressure, confusion, or incomplete information. KickStartX provides personalised career counselling in Indore and online career counselling across India through scientific assessments, personalised mentoring, scholarship guidance, and admission support in India and abroad.
+      </p>
+      
+      <div class="hero-actions">
+        <button class="btn-primary-teal">
+          <i class="fas fa-graduation-cap"></i> Request A Free Decision Audit <i class="fas fa-arrow-right"></i>
+        </button>
+        <button class="btn-outline-dark">
+          <i class="fas fa-compass" style="color: #facc15;"></i> Explore Career Options <i class="fas fa-arrow-right"></i>
+        </button>
+        <button class="btn-outline-dark">
+          <i class="fab fa-whatsapp"></i> WhatsApp Us <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- FEATURED CARD (Updated based on new screenshot) -->
+    <div class="featured-card">
+      <button class="carousel-btn left"><i class="fas fa-chevron-left"></i></button>
+      <button class="carousel-btn right"><i class="fas fa-chevron-right"></i></button>
+
+      <div class="featured-content">
+        <div class="badge">
+          <i class="fas fa-star" style="color: #facc15;"></i> Featured Service
+        </div>
+        <h2>Career Counselling<br><span>& Guidance</span></h2>
+        <p>Structured guidance for students choosing streams, colleges, careers, and future pathways.</p>
+        
+        <div class="featured-actions">
+          <button class="btn-teal-solid">Explore Services</button>
+          <button class="btn-dark-outline">Next Service <i class="fas fa-arrow-right"></i></button>
+        </div>
+      </div>
+
+      <div class="featured-image"></div>
+    </div>
+
+    <!-- OTHER SERVICES (Extracted from your text file) -->
+    <div class="services-grid">
+      <div class="service-item"><i class="fas fa-user-graduate"></i> Student-First Guidance</div>
+      <div class="service-item"><i class="fas fa-hand-holding-usd"></i> Scholarship Assistance</div>
+      <div class="service-item"><i class="fas fa-globe"></i> India & Abroad Admissions</div>
+      <div class="service-item"><i class="fas fa-flask"></i> Scientific Career Assessments</div>
+    </div>
+  </div>
+
+  <!-- =========================================
+       THEME TOGGLE FUNCTIONALITY
+       ========================================= -->
+  <script>
+    const btnLight = document.getElementById('btnLight');
+    const btnDark = document.getElementById('btnDark');
+    const body = document.body;
+
+    btnLight.addEventListener('click', () => {
+      body.classList.remove('dark-mode');
+      btnLight.classList.add('active');
+      btnDark.classList.remove('active');
+    });
+
+    btnDark.addEventListener('click', () => {
+      body.classList.add('dark-mode');
+      btnDark.classList.add('active');
+      btnLight.classList.remove('active');
+    });
+  </script>
+
+  <!-- =========================================
+       BOTPRESS WEBCHAT SCRIPTS
+       ========================================= -->
+  <script src="https://cdn.botpress.cloud/webchat/v5.0/inject.js"></script>
+  <script src="https://files.bpcontent.cloud/2026/10/26/10/20261026104845-71GZW189.js" defer></script>
+
+</body>
+</html>
